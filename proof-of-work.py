@@ -10,9 +10,9 @@ def proof_of_work(header,difficulty_bits):
 	target = 2**(256-difficulty_bits)
 	
 	for nonce in range(max_nonce):
-		hash_result = hashlib.sha256(str(header)+str(nonce)).hexdigest()
-		if long(hash_result,16) < target:
-			print ("Success with nonce%d"% nonce)
+		hash_result = hashlib.sha256(str(header).encode("UTF8")+str(nonce).encode("UTF_8")).hexdigest()
+		if int(hash_result,16) < target:
+			print ("Success with nonce %d"% nonce)
 			print ("Hash is %s"% hash_result)
 			return (hash_result,nonce)
 	print ("Failed after %d (max_nonce) tries"% nonce)
@@ -32,6 +32,6 @@ for difficulty_bits in range(32):
 	elapsed_time=end_time-start_time
 	print("Elapsed Time:%4.f seconds"% elapsed_time)
 	if elapsed_time >0:
-		hash_power=float(long(nonce)/elapsed_time)
+		hash_power=float(int(nonce)/elapsed_time)
 		print("Hashing Power:%ld hashes per second"%hash_power)
 
